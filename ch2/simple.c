@@ -6,7 +6,8 @@
 #include <linux/slab.h>
 /**
 
-The second part of this project involves modifying the kernel module so that it uses the kernel linked-list data structure.
+The second part of this project involves modifying the kernel module so that it
+uses the kernel linked-list data structure.
 
 
 circular, doubly linked list that is available to kernel developers.
@@ -30,7 +31,7 @@ struct birthday {
 /**
 
 We can declare a list head object, which we use as a reference to the head
-of the list by using the LIST HEAD() macro
+of the list by using the LIST_HEAD() macro
 
 **/
 

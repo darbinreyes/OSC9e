@@ -29,8 +29,6 @@
 
 // Thread definitions.
 #define NUM_RAND_POINTS (1 << 16)
-//#define NUM_WORKER_THREADS 1
-//static pthread_t      Worker_thread_tid[NUM_WORKER_THREADS];
 void Worker_thread_func(void);
 static int inside_circle_count;
 static double total_points = (double) 0.0;
@@ -80,34 +78,10 @@ static double monte_carlo_estimate_pi(double num_inside, double num_total) {
 
 int main(void) {
   int i;
-  //pthread_attr_t attr; /* set of attributes for the thread */
 
   if(init_state() != 0) {
     return -1;
   }
-
-  /* get the default attributes */
-  // if(pthread_attr_init(&attr) != 0) {
-  //   printf("%s\n",strerror(errno));
-  //   assert(0);
-  // }
-
-  /* Create the P threads */
-  // for(i = 0; i < NUM_WORKER_THREADS; i++) {
-  //   if(pthread_create(&Worker_thread_tid[i], &attr, Worker_thread_func, &inside_circle_count[i]) != 0) {
-  //     printf("%s\n",strerror(errno));
-  //     assert(0);
-  //   }
-  // }
-
-
-  /* Now wait for all the threads to exit */
-  // for(i = 0; i < NUM_WORKER_THREADS; i++) {
-  //   if(pthread_join(Worker_thread_tid[i], NULL) != 0) {
-  //     printf("%s\n",strerror(errno));
-  //     assert(0);
-  //   }
-  // }
 
   /**
 
@@ -116,11 +90,6 @@ int main(void) {
   **/
 
   Worker_thread_func();
-
-  // Print result
-  // for(i = 0; i < NUM_WORKER_THREADS; i++) {
-  //   printf("Index %d: Inside/Total = %d/%f. Pi estimate= %f. peace out.\n", i, inside_circle_count[i], total_points, monte_carlo_estimate_pi((double)inside_circle_count[i], total_points));
-  // }
 
   printf("Main: Inside/Total = %d/%f. Pi estimate= %f. peace out.\n", inside_circle_count, total_points, monte_carlo_estimate_pi((double)inside_circle_count, total_points));
   cleanup_state();
@@ -158,7 +127,7 @@ void Worker_thread_func(void)
   #pragma omp parallel
   {
   //pthread_t tid;
-  unsigned long id = -1;
+  unsigned long id = 0;
   double x, y;
   int i, my_inside_count;
 
@@ -175,8 +144,6 @@ void Worker_thread_func(void)
   */
 
   // Use the tid address to uniquely identify a thread's prints.
-  //tid = pthread_self();
-  //id = (unsigned long) &tid; // !!! TODO: go fix this in all previous code. i.e. Rm. get_t_num().s
 
   printf("#%lu: Hello bro, monte carlo.\n", id);
 
@@ -195,11 +162,9 @@ void Worker_thread_func(void)
 
   }
 
- // *((int *)param) = my_inside_count;
   inside_circle_count += my_inside_count;
   total_points += NUM_RAND_POINTS;
 
   printf("#%lu: Goodbye bro. my_inside_count = %d.\n", id, my_inside_count);
   }
-  //pthread_exit(0);
 }
