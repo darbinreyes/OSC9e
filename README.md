@@ -2,3 +2,5 @@
 ## Path to linux VM
 * /Users/darbinreyes/VirtualBox VMs/OSC-2016
 * ** linux password = osc
+* test
+
