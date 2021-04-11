@@ -20,10 +20,10 @@
                 "*.o"
             ],
             "follow_symlinks": true,
-            "path": "/Users/darbinreyes/dev/private_dev/osc_textbook/OSC9e/"
+            "path": "."
         },
         {
-            "path":"~/dev/private_dev/my_libs/seatest/"
+            "path":"../../seatest/"
         }
     ],
     "settings": {
